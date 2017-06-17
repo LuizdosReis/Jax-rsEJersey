@@ -1,3 +1,4 @@
+
 package br.com.alura.loja;
 
 import java.io.IOException;
