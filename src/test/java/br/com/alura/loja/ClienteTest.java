@@ -80,6 +80,25 @@ public class ClienteTest {
 	}
 	
 	@Test
+	public void testaRemocaoDeProdutoNoCarrinho(){
+		Response response = target.path("/carrinhos/1/produtos/6237").request().delete();
+		Assert.assertEquals(200,response.getStatus());
+		
+		String conteudo = target.path("/carrinhos/1").request().get(String.class);
+		
+		Carrinho carrinho = (Carrinho) new XStream().fromXML(conteudo);
+		
+		Produto esporte = new Produto(3467, "Jogo de esporte", 60, 2);
+				
+		Carrinho carrinhoParaComparacao = new Carrinho()
+								.adiciona(esporte)
+								.para("Rua Vergueiro 3185, 8 andar", "São Paulo")
+								.setId(1l);
+		
+		Assert.assertEquals(carrinhoParaComparacao,carrinho);
+	}
+	
+	@Test
 	public void testaMetodoPutProjeto(){
 		Projeto projeto = new Projeto("alura", 25, 2016);
 		String xml = projeto.toXML();		
