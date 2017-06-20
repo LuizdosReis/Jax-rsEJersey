@@ -1,5 +1,6 @@
 package br.com.alura.loja.modelo;
 
+import com.thoughtworks.xstream.XStream;
 
 public class Produto {
 
@@ -73,5 +74,14 @@ public class Produto {
 		if (quantidade != other.quantidade)
 			return false;
 		return true;
+	}
+
+	public String toXML() {
+		return new XStream().toXML(this);
+	}
+
+	@Override
+	public String toString() {
+		return "Produto [preco=" + preco + ", id=" + id + ", nome=" + nome + ", quantidade=" + quantidade + "]";
 	}
 }

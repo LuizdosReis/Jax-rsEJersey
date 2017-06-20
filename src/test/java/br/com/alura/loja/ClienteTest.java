@@ -59,7 +59,7 @@ public class ClienteTest {
 	}
 	
 	@Test
-	public void testaMetodoPutCarrinho(){
+	public void testaMetodoPostCarrinho(){
 		Carrinho carrinho = new Carrinho();
 		carrinho.setCidade("Santa Catarina");
 		carrinho.setRua("Rua nossa senhora do rosario");
@@ -103,7 +103,32 @@ public class ClienteTest {
 	}
 	
 	@Test
-	public void testaMetodoPutProjeto(){
+	public void testaAlteracaoDeQuantidadeDoProdutoNoCarrinho(){
+		Produto produto = new Produto(3467,"", 0,1);
+		String xml = produto.toXML();
+		
+		Entity<String> entity = Entity.entity(xml, MediaType.APPLICATION_XML);
+		
+		Response response = target.path("/carrinhos/1/produtos/3467/quantidade").request().put(entity);
+		
+		Assert.assertEquals(200,response.getStatus());
+		
+		String conteudo = target.path("/carrinhos/1").request().get(String.class);
+		
+		Carrinho carrinho = (Carrinho) new XStream().fromXML(conteudo);
+		
+		Produto esporte = new Produto(3467, "Jogo de esporte", 60, 1);
+				
+		Carrinho carrinhoParaComparacao = new Carrinho()
+								.adiciona(esporte)
+								.para("Rua Vergueiro 3185, 8 andar", "São Paulo")
+								.setId(1l);
+		
+		Assert.assertEquals(carrinhoParaComparacao,carrinho);
+	}
+	
+	@Test
+	public void testaMetodoPostProjeto(){
 		Projeto projeto = new Projeto("alura", 25, 2016);
 		String xml = projeto.toXML();		
 	

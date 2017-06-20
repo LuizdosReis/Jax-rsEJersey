@@ -118,5 +118,10 @@ public class Carrinho{
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "Carrinho [produtos=" + produtos + ", rua=" + rua + ", cidade=" + cidade + ", id=" + id + "]";
+	}
+
 
 }
