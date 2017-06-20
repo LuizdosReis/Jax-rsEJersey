@@ -7,6 +7,8 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.filter.LoggingFilter;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -35,7 +37,9 @@ public class ClienteTest {
 	
 	@Before
 	public void criandoAlvo() {
-		Client client = ClientBuilder.newClient();
+		ClientConfig config = new ClientConfig();
+		config.register(new LoggingFilter());
+		Client client = ClientBuilder.newClient(config);
 		target = client.target("http://localhost:8080");
 	}
 	
