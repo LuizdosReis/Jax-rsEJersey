@@ -25,15 +25,14 @@ public class ProjetoResource {
 	@GET
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_XML)
-	public String busca(@PathParam("id")long id){
+	public Projeto busca(@PathParam("id") long id){
 		Projeto projeto = dao.busca(id);
-		return projeto.toXML();
+		return projeto;
 	}
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_XML)
-	public Response salva(String conteudo){
-		  Projeto projeto = (Projeto) new XStream().fromXML(conteudo);
+	public Response salva(Projeto projeto){
 		  dao.adiciona(projeto);
 		  URI uri = URI.create("projetos"+ projeto.getId());
 		  return Response.created(uri).build();
